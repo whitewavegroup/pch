@@ -1,0 +1,147 @@
+[
+  {
+    "id": "p1",
+    "slug": "sonido-mexico-azteca-audio",
+    "name": "Azteca Audio",
+    "country": "Mexico",
+    "city": "CDMX",
+    "regions": [
+      "Mexico",
+      "Latam"
+    ],
+    "specialties": [
+      "audio",
+      "sound",
+      "staging",
+      "instrument-rental"
+    ],
+    "summary": "Renta de audio profesional, FOH/monitores, backline e instalación para iglesias y conciertos.",
+    "rating": 4.7,
+    "verifiedLevel": "verified",
+    "responseHours": 4,
+    "phone": "+52 55 0000 0000",
+    "website": "https://example.com/azteca",
+    "badges": [
+      "Iglesias expertas",
+      "Respuesta < 4h"
+    ],
+    "brands": [
+      "Shure",
+      "Yamaha",
+      "D&B"
+    ],
+    "certifications": [
+      "Dante",
+      "AVIXA CTS"
+    ],
+    "churchExpert": true
+  },
+  {
+    "id": "p2",
+    "slug": "iluminacion-colombia-bogota-luz-andina",
+    "name": "Luz Andina",
+    "country": "Colombia",
+    "city": "Bogotá",
+    "regions": [
+      "Colombia",
+      "Andes"
+    ],
+    "specialties": [
+      "lighting",
+      "lighting-design",
+      "staging",
+      "tents"
+    ],
+    "summary": "Diseño de luces, renta de luminarias, estructuras y carpas para festivales al aire libre.",
+    "rating": 4.8,
+    "verifiedLevel": "elite",
+    "responseHours": 6,
+    "phone": "+57 1 000 0000",
+    "website": "https://example.com/luzandina",
+    "badges": [
+      "Elite",
+      "Outdoor"
+    ],
+    "brands": [
+      "Chauvet",
+      "MA Lighting",
+      "Robe"
+    ],
+    "certifications": [
+      "Rigging Cert"
+    ],
+    "churchExpert": false
+  },
+  {
+    "id": "p3",
+    "slug": "stages-usa-miami-summit-staging",
+    "name": "Summit Staging & Power",
+    "country": "United States",
+    "city": "Miami",
+    "regions": [
+      "USA",
+      "Florida",
+      "Caribbean"
+    ],
+    "specialties": [
+      "staging",
+      "risers",
+      "generators",
+      "power",
+      "chairs",
+      "auditorium-seating",
+      "tents"
+    ],
+    "summary": "Tarimas modulares, pisos, sillas, carpas y plantas eléctricas para eventos masivos.",
+    "rating": 4.5,
+    "verifiedLevel": "verified",
+    "responseHours": 8,
+    "phone": "+1 305 000 0000",
+    "website": "https://example.com/summit",
+    "badges": [
+      "Mass Events"
+    ],
+    "brands": [
+      "Bil-Jax",
+      "Honda Power"
+    ],
+    "certifications": [
+      "OSHA"
+    ],
+    "churchExpert": false
+  },
+  {
+    "id": "p4",
+    "slug": "acustica-arquitectura-espana-iberia-acustic-architects",
+    "name": "Iberia Acoustic Architects",
+    "country": "Spain",
+    "city": "Madrid",
+    "regions": [
+      "Spain",
+      "EU"
+    ],
+    "specialties": [
+      "acoustics",
+      "acoustic-consulting",
+      "auditorium-architects",
+      "church-auditoriums"
+    ],
+    "summary": "Arquitectos y consultores de acústica para auditorios de iglesias y teatros.",
+    "rating": 4.9,
+    "verifiedLevel": "elite",
+    "responseHours": 12,
+    "phone": "+34 900 000 000",
+    "website": "https://example.com/iberia-acoustic",
+    "badges": [
+      "Church Auditoriums"
+    ],
+    "brands": [
+      "EASE",
+      "CATT"
+    ],
+    "certifications": [
+      "Colegio Oficial Arquitectos"
+    ],
+    "churchExpert": true
+  }
+]

@@ -1,0 +1,130 @@
+generator client { provider = "prisma-client-js" }
+datasource db { provider = "postgresql"; url = env("DATABASE_URL") }
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  role      Role     @default(CLIENT)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  providers Provider[]
+  reviews   Review[]
+  leads     Lead[]
+}
+
+enum Role { ADMIN MODERATOR PROVIDER CLIENT }
+
+model Provider {
+  id             String      @id @default(cuid())
+  slug           String      @unique
+  name           String
+  country        String
+  city           String?
+  summary        String?
+  ratingAvg      Float       @default(0)
+  ratingCount    Int         @default(0)
+  verifiedLevel  Verified    @default(BASIC)
+  responseHours  Int?
+  phone          String?
+  whatsapp       String?
+  email          String?
+  website        String?
+  churchExpert   Boolean     @default(false)
+  ownerId        String?
+  owner          User?       @relation(fields: [ownerId], references: [id])
+  services       ProviderService[]
+  brands         ProviderBrand[]
+  certifications Certification[]
+  regions        Region[]
+  reviews        Review[]
+  leads          Lead[]
+  media          Media[]
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+}
+
+enum Verified { BASIC VERIFIED ELITE }
+
+model Service {
+  id        String            @id @default(cuid())
+  key       String            @unique
+  labelEn   String
+  labelEs   String
+  createdAt DateTime          @default(now())
+  providers ProviderService[]
+}
+
+model ProviderService {
+  id          String   @id @default(cuid())
+  providerId  String
+  serviceId   String
+  provider    Provider @relation(fields: [providerId], references: [id], onDelete: Cascade)
+  service     Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  @@unique([providerId, serviceId])
+}
+
+model Region {
+  id          String   @id @default(cuid())
+  providerId  String
+  country     String
+  state       String?
+  city        String?
+  provider    Provider @relation(fields: [providerId], references: [id], onDelete: Cascade)
+  @@index([country, state, city])
+}
+
+model Certification {
+  id          String   @id @default(cuid())
+  providerId  String
+  name        String
+  provider    Provider @relation(fields: [providerId], references: [id], onDelete: Cascade)
+}
+
+model ProviderBrand {
+  id          String   @id @default(cuid())
+  providerId  String
+  name        String
+  provider    Provider @relation(fields: [providerId], references: [id], onDelete: Cascade)
+}
+
+model Review {
+  id          String   @id @default(cuid())
+  providerId  String
+  authorId    String
+  rating      Int
+  comment     String?
+  eventDate   DateTime?
+  createdAt   DateTime @default(now())
+  provider    Provider @relation(fields: [providerId], references: [id], onDelete: Cascade)
+  author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  @@index([providerId, authorId])
+}
+
+model Lead {
+  id          String   @id @default(cuid())
+  providerId  String
+  requesterId String?
+  name        String
+  email       String?
+  phone       String?
+  message     String?
+  country     String?
+  city        String?
+  budgetMin   Int?
+  budgetMax   Int?
+  eventDate   DateTime?
+  createdAt   DateTime @default(now())
+  provider    Provider @relation(fields: [providerId], references: [id], onDelete: Cascade)
+  requester   User?    @relation(fields: [requesterId], references: [id], onDelete: SetNull)
+  @@index([providerId, createdAt])
+}
+
+model Media {
+  id          String   @id @default(cuid())
+  providerId  String
+  url         String
+  kind        String?
+  createdAt   DateTime  @default(now())
+  provider    Provider  @relation(fields: [providerId], references: [id], onDelete: Cascade)
+}

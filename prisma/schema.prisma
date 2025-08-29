@@ -70,7 +70,6 @@ model ProviderService {
   serviceId   String
   provider    Provider @relation(fields: [providerId], references: [id], onDelete: Cascade)
   service     Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
-
   @@unique([providerId, serviceId])
 }
 
@@ -81,7 +80,6 @@ model Region {
   state       String?
   city        String?
   provider    Provider @relation(fields: [providerId], references: [id], onDelete: Cascade)
-
   @@index([country, state, city])
 }
 
@@ -95,7 +93,6 @@ model Review {
   createdAt   DateTime @default(now())
   provider    Provider @relation(fields: [providerId], references: [id], onDelete: Cascade)
   author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
-
   @@index([providerId, authorId])
 }
 
@@ -115,6 +112,5 @@ model Lead {
   createdAt   DateTime @default(now())
   provider    Provider @relation(fields: [providerId], references: [id], onDelete: Cascade)
   requester   User?    @relation(fields: [requesterId], references: [id], onDelete: SetNull)
-
   @@index([providerId, createdAt])
 }

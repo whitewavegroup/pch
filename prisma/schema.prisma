@@ -1,6 +1,24 @@
+generator client {
+  provider = "prisma-client-js"
+}
 
-generator client { provider = "prisma-client-js" }
-datasource db { provider = "postgresql"; url = env("DATABASE_URL") }
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  MODERATOR
+  PROVIDER
+  CLIENT
+}
+
+enum Verified {
+  BASIC
+  VERIFIED
+  ELITE
+}
 
 model User {
   id        String   @id @default(cuid())
@@ -13,48 +31,49 @@ model User {
   reviews   Review[]
   leads     Lead[]
 }
-enum Role { ADMIN MODERATOR PROVIDER CLIENT }
 
 model Provider {
-  id             String   @id @default(cuid())
-  slug           String   @unique
+  id             String      @id @default(cuid())
+  slug           String      @unique
   name           String
   country        String
   city           String?
   summary        String?
-  ratingAvg      Float    @default(0)
-  ratingCount    Int      @default(0)
-  verifiedLevel  Verified @default(BASIC)
+  ratingAvg      Float       @default(0)
+  ratingCount    Int         @default(0)
+  verifiedLevel  Verified    @default(BASIC)
   responseHours  Int?
   phone          String?
   whatsapp       String?
   email          String?
   website        String?
-  churchExpert   Boolean  @default(false)
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  churchExpert   Boolean     @default(false)
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
   services       ProviderService[]
   regions        Region[]
   reviews        Review[]
 }
-enum Verified { BASIC VERIFIED ELITE }
 
 model Service {
-  id        String   @id @default(cuid())
-  key       String   @unique
+  id        String            @id @default(cuid())
+  key       String            @unique
   labelEn   String
   labelEs   String
-  createdAt DateTime @default(now())
+  createdAt DateTime          @default(now())
   providers ProviderService[]
 }
+
 model ProviderService {
   id          String   @id @default(cuid())
   providerId  String
   serviceId   String
   provider    Provider @relation(fields: [providerId], references: [id], onDelete: Cascade)
   service     Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+
   @@unique([providerId, serviceId])
 }
+
 model Region {
   id          String   @id @default(cuid())
   providerId  String
@@ -62,8 +81,10 @@ model Region {
   state       String?
   city        String?
   provider    Provider @relation(fields: [providerId], references: [id], onDelete: Cascade)
+
   @@index([country, state, city])
 }
+
 model Review {
   id          String   @id @default(cuid())
   providerId  String
@@ -74,5 +95,26 @@ model Review {
   createdAt   DateTime @default(now())
   provider    Provider @relation(fields: [providerId], references: [id], onDelete: Cascade)
   author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
   @@index([providerId, authorId])
+}
+
+model Lead {
+  id          String   @id @default(cuid())
+  providerId  String
+  requesterId String?
+  name        String
+  email       String?
+  phone       String?
+  message     String?
+  country     String?
+  city        String?
+  budgetMin   Int?
+  budgetMax   Int?
+  eventDate   DateTime?
+  createdAt   DateTime @default(now())
+  provider    Provider @relation(fields: [providerId], references: [id], onDelete: Cascade)
+  requester   User?    @relation(fields: [requesterId], references: [id], onDelete: SetNull)
+
+  @@index([providerId, createdAt])
 }

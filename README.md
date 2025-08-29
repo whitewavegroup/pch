@@ -1,33 +1,25 @@
-# ProConnectHub — Git Ready (Fixed, Full)
+# ProConnectHub — Vercel One-Click
 
-✅ This package contains the **entire project** with the admin client fixed (no legacy `lib/adminClient.js`).  
-Uses: **Next.js 14 + Prisma + Supabase (Postgres)**
+**No necesitas correr comandos en tu computadora.**
 
-## 1) Local
+## Pasos para deploy
+1) Sube este folder a un repo en GitHub.
+2) En Vercel: **Import Project** → selecciona el repo.
+3) En **Project Settings → Environment Variables** agrega:
+   - `DATABASE_URL` = tu conexión de Supabase (como en `.env.example`)
+   - `SEED_TOKEN` = un secreto (puedes usar este mientras: seed_9d7da76433235389 y cambiarlo luego)
+4) Da **Deploy**. Durante el build se ejecuta automáticamente:
+   - `prisma generate`
+   - `prisma migrate deploy`
+5) Poblar datos (una sola vez):
+   - Abre en el navegador: `https://TU-DOMINIO/api/admin/seed?token=TU_SEED_TOKEN`
+   - Debe responder `{{ "ok": true, "seeded": true }}`
+6) Visita tu sitio: `https://TU-DOMINIO`
+
+## (Opcional) Local
+Si algún día quieres correr local:
 ```bash
 npm install
-npx prisma generate
-npx prisma migrate dev --name init
-npm run db:seed
 npm run dev
 # http://localhost:3000
 ```
-
-## 2) Env
-- `.env.local` already includes your Supabase connection:
-```
-DATABASE_URL="postgresql://postgres:nijdik-4pecjU-corton@db.pviemmxfzwryvpobtxnq.supabase.co:5432/postgres?pgbouncer=true&connection_limit=1&connect_timeout=15"
-```
-
-## 3) Deploy (Vercel)
-- Push this folder to GitHub.
-- Import in Vercel → add `DATABASE_URL` in Environment Variables.
-- Optional: `npx prisma migrate deploy` after deploy.
-
-## 4) DB-backed pages
-- Home (featured) → DB
-- Search (country/regions + services) → DB
-- Provider profile → DB
-
----
-Generated: 2025-08-29T20:22:44.608255Z

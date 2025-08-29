@@ -1,16 +1,11 @@
 {
-  "name": "proconnecthub-micontacto",
-  "version": "0.7.0",
+  "name": "proconnecthub-oneclick",
+  "version": "0.8.2",
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "prisma:generate": "prisma generate",
-    "prisma:migrate": "prisma migrate dev --name init",
-    "prisma:deploy": "prisma migrate deploy",
-    "db:seed": "ts-node --transpile-only scripts/seed.ts"
+    "build": "prisma generate && prisma migrate deploy && next build",
+    "start": "next start"
   },
   "dependencies": {
     "next": "14.2.5",
@@ -25,7 +20,6 @@
     "@types/react-dom": "18.2.25",
     "eslint": "8.57.0",
     "eslint-config-next": "14.2.5",
-    "prisma": "^5.17.0",
-    "ts-node": "^10.9.2"
+    "prisma": "^5.17.0"
   }
 }

@@ -1,1 +1,14 @@
-export const t=(lang:'en'|'es')=>lang==='es'?{tagline:'La conexión que necesitas para tu próxima producción.',searchPlaceholder:'Ej.: sonido México · iluminación Bogotá · tarimas Miami',featured:'Proveedores destacados',results:'Resultados',noResults:'Sin resultados. Prueba otra ciudad o sinónimo.'}:{tagline:'The connection you need for your next production.',searchPlaceholder:'Try: sound Mexico · lighting Bogotá · stages Miami',featured:'Featured providers',results:'Results',noResults:'No results. Try another city or synonym.'};
+
+export const t = (lang:'en'|'es') => lang==='es' ? {
+  tagline:'La conexión que necesitas para tu próxima producción.',
+  searchPlaceholder:'Ej.: sonido México',
+  featured:'Proveedores destacados',
+  results:'Resultados',
+  noResults:'Sin resultados.'
+} : {
+  tagline:'The connection you need for your next production.',
+  searchPlaceholder:'Try: sound Mexico',
+  featured:'Featured providers',
+  results:'Results',
+  noResults:'No results.'
+};

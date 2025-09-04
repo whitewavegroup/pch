@@ -1,0 +1,54 @@
+{
+  "brand": "ProConnectHub",
+  "tagline": "Contrata el talento t\u00e9cnico y creativo detr\u00e1s de eventos inolvidables.",
+  "cta_primary": "Buscar Proveedores",
+  "cta_secondary": "Publica tus Servicios",
+  "pitch": "Descubre y contrata t\u00e9cnicos, creativos y profesionales de producci\u00f3n \u2014 r\u00e1pido, confiable y biling\u00fce.",
+  "bullets": [
+    "Audio \u2022 Iluminaci\u00f3n \u2022 Video \u2022 Backline \u2022 Escenograf\u00eda \u2022 Rigging",
+    "Productores \u2022 Tour Managers \u2022 M\u00fasicos \u2022 Dise\u00f1adores",
+    "Renta \u2022 Instaladores Certificados \u2022 Ventas y Servicio"
+  ],
+  "sections": {
+    "categories_title": "Categor\u00edas Populares",
+    "features_title": "Por qu\u00e9 ProConnectHub",
+    "features": [
+      {
+        "title": "Hecho para Producci\u00f3n",
+        "desc": "Perfiles para gigs reales \u2014 habilidades, equipo, certificaciones, tarifas y disponibilidad."
+      },
+      {
+        "title": "Biling\u00fce de Origen",
+        "desc": "Ingl\u00e9s / Espa\u00f1ol en perfiles, mensajes y briefs."
+      },
+      {
+        "title": "Contrataci\u00f3n M\u00e1s R\u00e1pida",
+        "desc": "Shortlists, intros con plantillas y filtros inteligentes."
+      },
+      {
+        "title": "Se\u00f1ales de Confianza",
+        "desc": "Insignias verificadas, rese\u00f1as y referencias."
+      }
+    ],
+    "lead_title": "\u00bfListo para recibir leads?",
+    "lead_desc": "Agrega tu perfil y empieza a recibir solicitudes. Conecta tu calendario y muestra tu mejor trabajo.",
+    "sponsors_title": "Patrocinadores y Aliados"
+  },
+  "footer": {
+    "links": [
+      [
+        "/privacy",
+        "Privacidad"
+      ],
+      [
+        "/terms",
+        "T\u00e9rminos"
+      ],
+      [
+        "/contact",
+        "Contacto"
+      ]
+    ],
+    "copyright": "Todos los derechos reservados."
+  }
+}

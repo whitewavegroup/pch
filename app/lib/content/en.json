@@ -1,0 +1,54 @@
+{
+  "brand": "ProConnectHub",
+  "tagline": "Hire the tech & creative talent behind unforgettable events.",
+  "cta_primary": "Find Providers",
+  "cta_secondary": "List Your Services",
+  "pitch": "Discover and hire vetted technicians, creatives, and production pros \u2014 fast, reliable, bilingual.",
+  "bullets": [
+    "Audio \u2022 Lighting \u2022 Video \u2022 Backline \u2022 Stage \u2022 Rigging",
+    "Producers \u2022 Tour Managers \u2022 Musicians \u2022 Designers",
+    "Rentals \u2022 Certified Installers \u2022 Sales & Service"
+  ],
+  "sections": {
+    "categories_title": "Popular Categories",
+    "features_title": "Why ProConnectHub",
+    "features": [
+      {
+        "title": "Built for Production",
+        "desc": "Profiles tuned for real-world gigs \u2014 skills, gear, certs, rates, availability."
+      },
+      {
+        "title": "Bilingual by Design",
+        "desc": "English / Espa\u00f1ol across listings, messages and briefs."
+      },
+      {
+        "title": "Faster Hiring",
+        "desc": "Shortlists, templated intros, and smart filters cut time-to-book."
+      },
+      {
+        "title": "Trust Signals",
+        "desc": "Verified badges, reviews, references and work history."
+      }
+    ],
+    "lead_title": "Ready to get leads?",
+    "lead_desc": "Add your profile and start receiving job requests. Connect your calendar and showcase your best work.",
+    "sponsors_title": "Sponsors & Partners"
+  },
+  "footer": {
+    "links": [
+      [
+        "/privacy",
+        "Privacy"
+      ],
+      [
+        "/terms",
+        "Terms"
+      ],
+      [
+        "/contact",
+        "Contact"
+      ]
+    ],
+    "copyright": "All rights reserved."
+  }
+}

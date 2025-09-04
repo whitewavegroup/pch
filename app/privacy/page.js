@@ -1,0 +1,2 @@
+export const metadata = { title: "Privacy — ProConnectHub" };
+export default function Page(){return(<main className=\"container-limit py-16\"><h1 className=\"text-3xl font-semibold mb-6\">Privacy</h1><div className=\"prose prose-invert max-w-none\"><p>We respect your privacy. Data submitted via forms is used to match customers and providers and to contact you about your request. We do not sell your data. For removal or export requests, email <a href='mailto:support@proconnecthub.com'>support@proconnecthub.com</a>.</p></div></main>);}

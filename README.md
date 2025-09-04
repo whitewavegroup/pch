@@ -1,4 +1,1 @@
-# ProConnectHub Landing (Ready-to-Deploy)
-
-Run: `npm i && npm run dev`
-Optional env: RESEND_API_KEY, TO_EMAIL, FROM_EMAIL
+Rooted build. Ensure repo root contains the /app directory and app/layout.js.

@@ -1,6 +1,15 @@
 'use client'
 import { useI18n } from '../lib/i18n';
-const cats=[{ name: 'Audio Engineers', es: 'Ingenieros de Audio' },{ name: 'Lighting Designers', es: 'Diseñadores de Iluminación' },{ name: 'Video & LED Techs', es: 'Técnicos de Video y LED' },{ name: 'Backline & Stage', es: 'Backline y Escenario' },{ name: 'Musicians for Hire', es: 'Músicos por Contrato' },{ name: 'Producers & PMs', es: 'Productores y PMs' },{ name: 'Installers (Cert.)', es: 'Instaladores (Cert.)' },{ name: 'Rentals & Sales', es: 'Renta y Ventas' }];
+const cats=[
+  { name: 'Audio Engineers', es: 'Ingenieros de Audio' },
+  { name: 'Lighting Designers', es: 'Diseñadores de Iluminación' },
+  { name: 'Video & LED Techs', es: 'Técnicos de Video y LED' },
+  { name: 'Backline & Stage', es: 'Backline y Escenario' },
+  { name: 'Musicians for Hire', es: 'Músicos por Contrato' },
+  { name: 'Producers & PMs', es: 'Productores y PMs' },
+  { name: 'Installers (Cert.)', es: 'Instaladores (Cert.)' },
+  { name: 'Rentals & Sales', es: 'Renta y Ventas' }
+];
 export default function Categories(){
   const { lang, t } = useI18n();
   return (

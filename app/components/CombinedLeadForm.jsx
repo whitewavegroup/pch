@@ -9,18 +9,108 @@ export default function CombinedLeadForm(){
   const [mode,setMode]=useState('customer');
   const [submitted,setSubmitted]=useState(false);
   const [errors,setErrors]=useState({});
-  useEffect(()=>{const form=document.getElementById('pch-unified-form'); if(!form) return; const set=(n,v)=>{const el=form.querySelector(`[name="${'${'}n{'}'}"]`); if(el) el.value=v||'';}; const p=new URLSearchParams(window.location.search); ['utm_source','utm_medium','utm_campaign','utm_term','utm_content','gclid','fbclid'].forEach(k=>set(k,p.get(k)||'')); set('referrer_url', document.referrer||'');},[]);
+  useEffect(()=>{const form=document.getElementById('pch-unified-form'); if(!form) return; const set=(n,v)=>{const el=form.querySelector(`[name="${n}"]`); if(el) el.value=v||'';}; const p=new URLSearchParams(window.location.search); ['utm_source','utm_medium','utm_campaign','utm_term','utm_content','gclid','fbclid'].forEach(k=>set(k,p.get(k)||'')); set('referrer_url', document.referrer||'');},[]);
   const L=(en,es)=>lang==='es'?es:en;
   const labels={userType:L('I need to hire','Necesito contratar'),userTypeAlt:L('I offer services','Ofrezco servicios'),contact:L('Contact Information','Información de Contacto'),name:L('Name','Nombre'),email:'Email',phone:L('Phone','Teléfono'),preferredLang:L('Preferred Language','Idioma Preferido'),customerTitle:L('Project / Event Title','Título del Proyecto / Evento'),projectType:L('Project Type','Tipo de Proyecto'),overview:L('Short Description','Descripción Breve'),rolesNeeded:L('Roles Needed','Roles Requeridos'),start:L('Start Date','Fecha de Inicio'),end:L('End Date','Fecha de Fin'),city:L('City','Ciudad'),country:L('Country','País'),onsite:L('On-site / Remote','Presencial / Remoto'),budget:L('Budget Model','Modelo de Presupuesto'),decision:L('Decision Timeline','Línea de Tiempo de Decisión'),providerBasics:L('Profile Basics','Datos del Perfil'),companyOrInd:L('Individual or Company?','¿Persona o Compañía?'),headline:L('Headline','Titular'),bio:L('Short Bio','Bio Corta'),services:L('Services Offered','Servicios Ofrecidos'),skills:L('Skills / Tags','Competencias / Tags'),base:L('Base Location','Ubicación Base'),availability:L('Availability','Disponibilidad'),rates:L('Rates & Billing','Tarifas y Facturación'),certifications:L('Certifications & Compliance','Certificaciones y Cumplimiento'),submit:L('Submit','Enviar')};
   function validate(fd){const e={}; if(!fd.get('contact_name')) e.contact_name='Required'; if(!fd.get('email')) e.email='Required'; if(!fd.get('phone')) e.phone='Required'; if(mode==='customer'){ if(!fd.get('project_title')) e.project_title='Required'; if(!fd.get('project_type')) e.project_type='Required'; if(!fd.get('start_date')) e.start_date='Required'; if(!fd.get('end_date')) e.end_date='Required'; if(!fd.get('city')) e.city='Required'; if(!fd.get('country')) e.country='Required'; } else { if(!fd.get('display_name')) e.display_name='Required'; if(!fd.get('headline')) e.headline='Required'; if(!fd.get('service_categories')) e.service_categories='Required'; if(!fd.get('base_city')) e.base_city='Required'; if(!fd.get('base_country')) e.base_country='Required'; } return e; }
   async function onSubmit(ev){ev.preventDefault(); const form=ev.currentTarget; const fd=new FormData(form); fd.set('form_role',mode); fd.set('consent_timestamp', new Date().toISOString()); const e=validate(fd); setErrors(e); if(Object.keys(e).length) return; try{ const res=await fetch('/api/lead',{method:'POST', body:fd}); if(!res.ok) throw new Error('Bad response'); setSubmitted(true); form.reset(); setTimeout(()=>setSubmitted(false),6000);}catch(err){console.error(err); alert('Submission failed. Please try again.');}}
-  const input="w-full px-3 py-2 rounded-lg bg-white/5 border border-white/10 focus:outline-none focus:ring-2 focus:ring-sky-500"; const label="block text-sm mb-1 opacity-90";
-  return (<div className="card p-6"><form id="pch-unified-form" onSubmit={onSubmit} className="space-y-6"><input type="hidden" name="form_role" value={mode} /><HiddenFields />
-  <div className="flex items-center gap-2"><button type="button" onClick={()=>setMode('customer')} className={`btn ${mode==='customer'?'btn-primary':'btn-ghost'}`}>{labels.userType}</button><button type="button" onClick={()=>setMode('provider')} className={`btn ${mode==='provider'?'btn-primary':'btn-ghost'}`}>{labels.userTypeAlt}</button></div>
-  <div><h3 className="text-lg font-semibold mb-2">{labels.contact}</h3><div className="grid md:grid-cols-2 gap-4"><div><label className={label}>{labels.name}</label><input name="contact_name" className={input} />{errors.contact_name && <div className="text-red-300 text-sm mt-1">{errors.contact_name}</div>}</div><div><label className={label}>{labels.email}</label><input name="email" type="email" className={input} placeholder="you@email.com" />{errors.email && <div className="text-red-300 text-sm mt-1">{errors.email}</div>}</div><div><label className={label}>{labels.phone}</label><input name="phone" type="tel" className={input} placeholder="+1 555 123 4567" />{errors.phone && <div className="text-red-300 text-sm mt-1">{errors.phone}</div>}</div><div><label className={label}>{labels.preferredLang}</label><select name="preferred_language" className={input}>{languages.map(l=><option key={l} value={l}>{l}</option>)}</select></div></div></div>
-  {mode==='customer' && (<div className="space-y-6"><div><h3 className="text-lg font-semibold mb-2">{labels.customerTitle}</h3><input name="project_title" className={input} />{errors.project_title && <div className="text-red-300 text-sm mt-1">{errors.project_title}</div>}</div><div className="grid md:grid-cols-2 gap-4"><div><label className={label}>{labels.projectType}</label><select name="project_type" className={input}>{['Concert','Church Event','Corporate','Theater','Tour','Broadcast/Streaming','Festival','Installation','Other'].map(o=>(<option key={o} value={o}>{o}</option>))}</select>{errors.project_type && <div className="text-red-300 text-sm mt-1">{errors.project_type}</div>}</div><div><label className={label}>{labels.rolesNeeded}</label><select name="roles_needed" className={input} multiple>{roles.map(r=>(<option key={r} value={r}>{r}</option>))}</select></div></div><div><label className={label}>{labels.overview}</label><textarea name="brief_overview" className={input} rows={4}></textarea></div><div className="grid md:grid-cols-2 gap-4"><div><label className={label}>{labels.start}</label><input type="date" name="start_date" className={input} />{errors.start_date && <div className="text-red-300 text-sm mt-1">{errors.start_date}</div>}</div><div><label className={label}>{labels.end}</label><input type="date" name="end_date" className={input} />{errors.end_date && <div className="text-red-300 text-sm mt-1">{errors.end_date}</div>}</div></div><div className="grid md:grid-cols-3 gap-4"><div><label className={label}>{labels.city}</label><input name="city" className={input} />{errors.city && <div className="text-red-300 text-sm mt-1">{errors.city}</div>}</div><div><label className={label}>State/Region</label><input name="state_region" className={input} /></div><div><label className={label}>{labels.country}</label><input name="country" className={input} />{errors.country && <div className="text-red-300 text-sm mt-1">{errors.country}</div>}</div></div><div className="grid md:grid-cols-3 gap-4"><div><label className={label}>{labels.onsite}</label><select name="onsite_or_remote" className={input}>{['On-site','Remote','Hybrid'].map(o=>(<option key={o} value={o}>{o}</option>))}</select></div><div><label className={label}>{labels.budget}</label><select name="budget_model" className={input}>{['Hourly','Day Rate','Flat Project','Not Sure'].map(o=>(<option key={o} value={o}>{o}</option>))}</select></div><div><label className={label}>{labels.decision}</label><select name="ready_to_hire" className={input}>{['Now','This Week','This Month','Exploring'].map(o=>(<option key={o} value={o}>{o}</option>))}</select></div></div></div>)}
-  {mode==='provider' && (<div className="space-y-6"><div><h3 className="text-lg font-semibold mb-2">{labels.providerBasics}</h3><div className="grid md:grid-cols-2 gap-4"><div><label className={label}>{labels.companyOrInd}</label><select name="is_company" className={input}><option value="Individual">Individual</option><option value="Company">Company</option></select></div><div><label className={label}>{labels.headline}</label><input name="headline" className={input} placeholder="FOH Engineer • Touring & Corporate" /></div><div className="md:col-span-2"><label className={label}>Name / Company</label><input name="display_name" className={input} /></div><div className="md:col-span-2"><label className={label}>{labels.bio}</label><textarea name="bio" className={input} rows={3}></textarea></div></div></div><div><h3 className="text-lg font-semibold mb-2">{labels.services}</h3><div className="grid md:grid-cols-2 gap-4"><div><label className={label}>Service Categories</label><select name="service_categories" className={input} multiple>{roles.map(r=>(<option key={r} value={r}>{r}</option>))}</select></div><div><label className={label}>{labels.skills}</label><input name="skills_tags" className={input} placeholder="Dante, SMAART, MA3, Vectorworks" /></div></div></div><div><h3 className="text-lg font-semibold mb-2">{labels.base}</h3><div className="grid md:grid-cols-3 gap-4"><div><label className={label}>{labels.city}</label><input name="base_city" className={input} /></div><div><label className={label}>State/Region</label><input name="base_state_region" className={input} /></div><div><label className={label}>{labels.country}</label><input name="base_country" className={input} /></div></div></div><div><h3 className="text-lg font-semibold mb-2">{labels.availability}</h3><div className="grid md:grid-cols-3 gap-4"><div><label className={label}>Type</label><select name="availability_type" className={input}>{['Full-time','Part-time','Freelance'].map(o=>(<option key={o} value={o}>{o}</option>))}</select></div><div><label className={label}>Calendar Link</label><input name="calendar_link" className={input} placeholder="https://calendly.com/..." /></div><div><label className={label}>Rush Jobs OK?</label><select name="rush_jobs_ok" className={input}><option value="Yes">Yes</option><option value="No">No</option></select></div></div></div><div><h3 className="text-lg font-semibold mb-2">{labels.rates}</h3><div className="grid md:grid-cols-3 gap-4"><div><label className={label}>Rate Model</label><select name="rate_model" className={input} multiple>{['Hourly','Day Rate','Flat Project','Retainer'].map(o=>(<option key={o} value={o}>{o}</option>))}</select></div><div className="md:col-span-2"><label className={label}>Rate Notes</label><input name="rate_notes" className={input} placeholder="Ranges or 'contact for quote'" /></div></div></div><div><h3 className="text-lg font-semibold mb-2">{labels.certifications}</h3><div className="grid md:grid-cols-3 gap-4"><div><label className={label}>Certifications</label><input name="certifications" className={input} placeholder="OSHA 10/30, ETCP, Dante, CTS..." /></div><div><label className={label}>Insurance (CGL)</label><select name="insurance_cgl" className={input}><option value="No">No</option><option value="Yes">Yes</option></select></div><div><label className={label}>Tax Status</label><select name="tax_status" className={input}>{['Sole Prop','LLC','Corp','Other'].map(o=>(<option key={o} value={o}>{o}</option>))}</select></div></div></div></div>)}
-  <div className="flex items-center justify-between"><label className="small"><input type="checkbox" name="agree_terms" required className="mr-2" />{lang==='es' ? 'Acepto Términos y Privacidad' : 'I agree to Terms & Privacy'}</label><button type="submit" className="btn btn-primary">{labels.submit}</button></div>
-  {submitted && (<div className="mt-3 text-green-300 small">{lang==='es' ? '¡Gracias! Tu solicitud fue enviada.' : 'Thanks! Your request was submitted.'}</div>)}
-  </form><p className="small opacity-70 mt-4">{lang==='es' ? 'Nota: Si el correo está habilitado, también recibirás confirmación.' : 'Note: If email is enabled, you will also receive a confirmation.'}</p></div>);
+  const input="w-full px-3 py-2 rounded-lg bg:white/5 border border-white/10 focus:outline-none focus:ring-2 focus:ring-sky-500".replace("bg:white/5","bg-white/5");
+  const label="block text-sm mb-1 opacity-90";
+  return (
+    <div className="card p-6">
+      <form id="pch-unified-form" onSubmit={onSubmit} className="space-y-6">
+        <input type="hidden" name="form_role" value={mode} />
+        <HiddenFields />
+        <div className="flex items-center gap-2">
+          <button type="button" onClick={()=>setMode('customer')} className={`btn ${mode==='customer'?'btn-primary':'btn-ghost'}`}>{labels.userType}</button>
+          <button type="button" onClick={()=>setMode('provider')} className={`btn ${mode==='provider'?'btn-primary':'btn-ghost'}`}>{labels.userTypeAlt}</button>
+        </div>
+        <div>
+          <h3 className="text-lg font-semibold mb-2">{labels.contact}</h3>
+          <div className="grid md:grid-cols-2 gap-4">
+            <div><label className={label}>{labels.name}</label><input name="contact_name" className={input} />{errors.contact_name && <div className="text-red-300 text-sm mt-1">{errors.contact_name}</div>}</div>
+            <div><label className={label}>{labels.email}</label><input name="email" type="email" className={input} placeholder="you@email.com" />{errors.email && <div className="text-red-300 text-sm mt-1">{errors.email}</div>}</div>
+            <div><label className={label}>{labels.phone}</label><input name="phone" type="tel" className={input} placeholder="+1 555 123 4567" />{errors.phone && <div className="text-red-300 text-sm mt-1">{errors.phone}</div>}</div>
+            <div><label className={label}>{labels.preferredLang}</label><select name="preferred_language" className={input}>{languages.map(l=><option key={l} value={l}>{l}</option>)}</select></div>
+          </div>
+        </div>
+        {/* Customer mode */}
+        {mode==='customer' && (<div className="space-y-6">
+          <div><h3 className="text-lg font-semibold mb-2">{labels.customerTitle}</h3><input name="project_title" className={input} />{errors.project_title && <div className="text-red-300 text-sm mt-1">{errors.project_title}</div>}</div>
+          <div className="grid md:grid-cols-2 gap-4">
+            <div><label className={label}>{labels.projectType}</label><select name="project_type" className={input}>{['Concert','Church Event','Corporate','Theater','Tour','Broadcast/Streaming','Festival','Installation','Other'].map(o=>(<option key={o} value={o}>{o}</option>))}</select>{errors.project_type && <div className="text-red-300 text-sm mt-1">{errors.project_type}</div>}</div>
+            <div><label className={label}>{labels.rolesNeeded}</label><select name="roles_needed" className={input} multiple>{roles.map(r=>(<option key={r} value={r}>{r}</option>))}</select></div>
+          </div>
+          <div><label className={label}>{labels.overview}</label><textarea name="brief_overview" className={input} rows={4}></textarea></div>
+          <div className="grid md:grid-cols-2 gap-4">
+            <div><label className={label}>{labels.start}</label><input type="date" name="start_date" className={input} />{errors.start_date && <div className="text-red-300 text-sm mt-1">{errors.start_date}</div>}</div>
+            <div><label className={label}>{labels.end}</label><input type="date" name="end_date" className={input} />{errors.end_date && <div className="text-red-300 text-sm mt-1">{errors.end_date}</div>}</div>
+          </div>
+          <div className="grid md:grid-cols-3 gap-4">
+            <div><label className={label}>{labels.city}</label><input name="city" className={input} />{errors.city && <div className="text-red-300 text-sm mt-1">{errors.city}</div>}</div>
+            <div><label className={label}>State/Region</label><input name="state_region" className={input} /></div>
+            <div><label className={label}>{labels.country}</label><input name="country" className={input} />{errors.country && <div className="text-red-300 text-sm mt-1">{errors.country}</div>}</div>
+          </div>
+          <div className="grid md:grid-cols-3 gap-4">
+            <div><label className={label}>{labels.onsite}</label><select name="onsite_or_remote" className={input}>{['On-site','Remote','Hybrid'].map(o=>(<option key={o} value={o}>{o}</option>))}</select></div>
+            <div><label className={label}>{labels.budget}</label><select name="budget_model" className={input}>{['Hourly','Day Rate','Flat Project','Not Sure'].map(o=>(<option key={o} value={o}>{o}</option>))}</select></div>
+            <div><label className={label}>{labels.decision}</label><select name="ready_to_hire" className={input}>{['Now','This Week','This Month','Exploring'].map(o=>(<option key={o} value={o}>{o}</option>))}</select></div>
+          </div>
+        </div>)}
+        {/* Provider mode */}
+        {mode==='provider' && (<div className="space-y-6">
+          <div><h3 className="text-lg font-semibold mb-2">{labels.providerBasics}</h3>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div><label className={label}>{labels.companyOrInd}</label><select name="is_company" className={input}><option value="Individual">Individual</option><option value="Company">Company</option></select></div>
+              <div><label className={label}>{labels.headline}</label><input name="headline" className={input} placeholder="FOH Engineer • Touring & Corporate" /></div>
+              <div className="md:col-span-2"><label className={label}>Name / Company</label><input name="display_name" className={input} /></div>
+              <div className="md:col-span-2"><label className={label}>{labels.bio}</label><textarea name="bio" className={input} rows={3}></textarea></div>
+            </div>
+          </div>
+          <div><h3 className="text-lg font-semibold mb-2">{labels.services}</h3>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div><label className={label}>Service Categories</label><select name="service_categories" className={input} multiple>{roles.map(r=>(<option key={r} value={r}>{r}</option>))}</select></div>
+              <div><label className={label}>{labels.skills}</label><input name="skills_tags" className={input} placeholder="Dante, SMAART, MA3, Vectorworks" /></div>
+            </div>
+          </div>
+          <div><h3 className="text-lg font-semibold mb-2">{labels.base}</h3>
+            <div className="grid md:grid-cols-3 gap-4">
+              <div><label className={label}>{labels.city}</label><input name="base_city" className={input} /></div>
+              <div><label className={label}>State/Region</label><input name="base_state_region" className={input} /></div>
+              <div><label className={label}>{labels.country}</label><input name="base_country" className={input} /></div>
+            </div>
+          </div>
+          <div><h3 className="text-lg font-semibold mb-2">{labels.availability}</h3>
+            <div className="grid md:grid-cols-3 gap-4">
+              <div><label className={label}>Type</label><select name="availability_type" className={input}>{['Full-time','Part-time','Freelance'].map(o=>(<option key={o} value={o}>{o}</option>))}</select></div>
+              <div><label className={label}>Calendar Link</label><input name="calendar_link" className={input} placeholder="https://calendly.com/..." /></div>
+              <div><label className={label}>Rush Jobs OK?</label><select name="rush_jobs_ok" className={input}><option value="Yes">Yes</option><option value="No">No</option></select></div>
+            </div>
+          </div>
+          <div><h3 className="text-lg font-semibold mb-2">{labels.rates}</h3>
+            <div className="grid md:grid-cols-3 gap-4">
+              <div><label className={label}>Rate Model</label><select name="rate_model" className={input} multiple>{['Hourly','Day Rate','Flat Project','Retainer'].map(o=>(<option key={o} value={o}>{o}</option>))}</select></div>
+              <div className="md:col-span-2"><label className={label}>Rate Notes</label><input name="rate_notes" className={input} placeholder="Ranges or 'contact for quote'" /></div>
+            </div>
+          </div>
+          <div><h3 className="text-lg font-semibold mb-2">{labels.certifications}</h3>
+            <div className="grid md:grid-cols-3 gap-4">
+              <div><label className={label}>Certifications</label><input name="certifications" className={input} placeholder="OSHA 10/30, ETCP, Dante, CTS..." /></div>
+              <div><label className={label}>Insurance (CGL)</label><select name="insurance_cgl" className={input}><option value="No">No</option><option value="Yes">Yes</option></select></div>
+              <div><label className={label}>Tax Status</label><select name="tax_status" className={input}>{['Sole Prop','LLC','Corp','Other'].map(o=>(<option key={o} value={o}>{o}</option>))}</select></div>
+            </div>
+          </div>
+        </div>)}
+        <div className="flex items-center justify-between">
+          <label className="small">
+            <input type="checkbox" name="agree_terms" required className="mr-2" />
+            {lang==='es' ? 'Acepto Términos y Privacidad' : 'I agree to Terms & Privacy'}
+          </label>
+          <button type="submit" className="btn btn-primary">{labels.submit}</button>
+        </div>
+        {submitted && (<div className="mt-3 text-green-300 small">{lang==='es' ? '¡Gracias! Tu solicitud fue enviada.' : 'Thanks! Your request was submitted.'}</div>)}
+      </form>
+      <p className="small opacity-70 mt-4">{lang==='es' ? 'Nota: Si el correo está habilitado, también recibirás confirmación.' : 'Note: If email is enabled, you will also receive a confirmation.'}</p>
+    </div>
+  );
 }

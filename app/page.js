@@ -1,8 +1,21 @@
-export default function Home() {
+'use client'
+import Header from './components/Header';
+import Hero from './components/Hero';
+import Features from './components/Features';
+import Categories from './components/Categories';
+import LeadSection from './components/LeadSection';
+import SponsorBanner from './components/SponsorBanner';
+import Footer from './components/Footer';
+export default function Home(){
   return (
-    <main className="p-10">
-      <h1 className="text-4xl font-bold">ProConnectHub</h1>
-      <p className="mt-4">Landing page scaffold is working.</p>
+    <main>
+      <Header />
+      <Hero />
+      <Categories />
+      <Features />
+      <LeadSection />
+      <SponsorBanner />
+      <Footer />
     </main>
   );
 }

@@ -15,7 +15,7 @@
     "features": [
       {
         "title": "Built for Production",
-        "desc": "Profiles tuned for real-world gigs \u2014 skills, gear, certs, rates, availability."
+        "desc": "Profiles tuned for gigs \u2014 skills, gear, certs, rates, availability."
       },
       {
         "title": "Bilingual by Design",
@@ -23,11 +23,11 @@
       },
       {
         "title": "Faster Hiring",
-        "desc": "Shortlists, templated intros, and smart filters cut time-to-book."
+        "desc": "Filters and templates cut time-to-book."
       },
       {
         "title": "Trust Signals",
-        "desc": "Verified badges, reviews, references and work history."
+        "desc": "Verified badges, reviews, references and history."
       }
     ],
     "lead_title": "Ready to get leads?",
